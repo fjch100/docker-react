@@ -1,0 +1,26 @@
+version: '3'
+# se va a levantar un container o servicio (frontend/react) con el nombre web
+services:
+  web:
+    build:
+      # contex es el directorio de trabajo
+      context: .
+      # se especifica el dockerfile a usar para el build
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+      # reemplazamos las opciones con -v, para crear los volumenes
+    volumes:
+      - /home/node/app/node_modules
+      - ./:/home/node/app
+  test:
+    build:
+      # contex es el directorio de trabajo
+      context: .
+      # se especifica el dockerfile a usar para el build
+      dockerfile: Dockerfile.dev
+    # reemplazamos las opciones con -v, para crear los volumenes
+    volumes:
+      - /home/node/app/node_modules
+      - ./:/home/node/app
+    command: ["npm", "run", "test"]
